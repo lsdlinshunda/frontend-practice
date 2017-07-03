@@ -54,7 +54,7 @@
 		  var code = event.keyCode; 
 		  if (13 == code && $input.is(":focus")) {
 			var value = $input.val()
-			$list.html($list.html() + '<li class="uncompleted"><div class="view"><input class="toggle" type="checkbox"><label>' + value + '</label><button class="destroy"></button></div></li>')
+			$list.append('<li class="uncompleted"><div class="view"><input class="toggle" type="checkbox" name="todo-check"><label>' + value + '</label><button class="destroy"></button></div></li>')
 			//update the number of left items
 			leftItem++
 			$count.html('<strong>'+leftItem+'</strong> item left')
