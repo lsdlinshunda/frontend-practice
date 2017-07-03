@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<meta charset="utf-8">
 		<title>My Todo List</title>
 	</head>
 
@@ -15,6 +16,7 @@
 		var $addBtn = $('#add')
 		var $list = $('#list')
 		var $input = $('#new-todo')
+		alert("响应键盘的enter事件")
 		$addBtn.on('click', function(){
 			var value = $input.val()
 			$list.html($list.html() + '<li>' + value + '<button class="removeBtn">删除</button><button class="completeBtn">完成</button></li>')

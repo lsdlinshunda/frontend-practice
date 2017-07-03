@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Template ? TodoMVC</title>
+		<link rel="stylesheet" href="./todo.css">
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				<input class="new-todo" placeholder="What needs to be done?" autofocus>
+			</header>
+			<!-- This section should be hidden by default and shown when there are todos -->
+			<section class="main">
+				<ul class="todo-list">
+				</ul>
+			</section>
+			<!-- This footer should hidden by default and shown when there are todos -->
+			<footer class="footer">
+				<!-- This should be `0 items left` by default -->
+				<span class="todo-count"><strong>0</strong> item left</span>
+				<!-- Remove this if you don't implement routing -->
+				<ul class="filters">
+					<li>
+						<a class="selected" href="#/">All</a>
+					</li>
+					<li>
+						<a href="#/active">Active</a>
+					</li>
+					<li>
+						<a href="#/completed">Completed</a>
+					</li>
+				</ul>
+				<!-- Hidden if no completed items are left ¡ý -->
+				<button class="clear-completed">Clear completed</button>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Double-click to edit a todo</p>
+		</footer>
+	</body>
+	
+	<script src="./jquery-3.2.1.min.js"></script>
+	<script>		
+		var $list = $('.todo-list')
+		var $input = $('.new-todo')
+		var $count = $('.todo-count')
+		var leftItem = 0
+		
+		//add new todo item
+		$(document).keypress(function (e){ 
+		  var code = event.keyCode; 
+		  if (13 == code && $input.is(":focus")) {
+			var value = $input.val()
+			$list.html($list.html() + '<li class="uncompleted"><div class="view"><input class="toggle" type="checkbox"><label>' + value + '</label><button class="destroy"></button></div></li>')
+			//update the number of left items
+			leftItem++
+			$count.html('<strong>'+leftItem+'</strong> item left')
+		  } 
+		})
+		
+		//delete a todo item
+		$(document).on('click', '.destroy', function(e){
+			if ($(e.target).parent().parent().attr('class') == 'uncompleted'){
+				leftItem--
+				$count.html('<strong>'+leftItem+'</strong> item left')
+			}
+			$(e.target).parent().parent().remove()
+		})
+		
+		//change the state of item
+		$(document).on('click', '.toggle', function(e){
+		if($(e.target).parent().parent().attr('class')== 'completed'){
+			$(e.target).parent().parent().attr('class', 'uncompleted')
+			leftItem++
+			$count.html('<strong>'+leftItem+'</strong> item left')
+		}
+		else{
+			$(e.target).parent().parent().attr('class', 'completed')
+			leftItem--
+			$count.html('<strong>'+leftItem+'</strong> item left')
+		}
+		}) 
+		
+		//clear completed items
+		$(document).on('click', '.clear-completed', function(e){
+			$('input:checkbox').each(function () {
+				if ($(this).parent().parent().prop('class') == 'completed')
+					$(this).parent().parent().remove()
+			})
+		})
+		
+		$("label").dblclick(function(){
+			var label = $(this)
+			var txt = label.text()
+			var input = $("<input class='changeItem' type='text' value="+txt+">")
+			label.html(input)
+			input.click(function(){return false})
+			input.trigger("focus")
+			input.blur(function(){
+				var newText = $(this).val()
+				label.html(newText)
+			})
+		}) 
+	</script>
+</html>
