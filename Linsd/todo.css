@@ -147,6 +147,7 @@ label[for='toggle-all'] {
 	position: relative;
 	font-size: 24px;
 	border-bottom: 1px solid #ededed;
+	line-height: 1.4em;
 }
 
 .todo-list li:last-child {
